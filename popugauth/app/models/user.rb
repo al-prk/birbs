@@ -4,7 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  after_commit :sync
+
   def admin?
     role == 'admin'
+  end
+
+  def sync
+    NotifyUpdatedUser.call(user: self)
   end
 end
