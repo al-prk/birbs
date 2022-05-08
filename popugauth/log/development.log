@@ -1,0 +1,954 @@
+Started GET "/" for 127.0.0.1 at 2022-05-08 13:22:55 +0300
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.5ms | Allocations: 732)
+Completed 200 OK in 12ms (Views: 4.8ms | ActiveRecord: 0.0ms | Allocations: 6880)
+
+
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (449.3ms)[0m  [1m[35mCREATE DATABASE "ppg_auth_development" ENCODING = 'unicode'[0m
+  [1m[35m (344.7ms)[0m  [1m[35mCREATE DATABASE "ppg_auth_test" ENCODING = 'unicode'[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7263652049543621340)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20220508103328)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220508103328"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-05-08 10:35:48.593164"], ["updated_at", "2022-05-08 10:35:48.593164"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7263652049543621340)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7263652049543621340)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateDoorkeeperTables (20220508103853)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "oauth_applications" ("id" bigserial primary key, "name" character varying NOT NULL, "uid" character varying NOT NULL, "secret" character varying NOT NULL, "redirect_uri" text NOT NULL, "scopes" character varying DEFAULT '' NOT NULL, "confidential" boolean DEFAULT TRUE NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_oauth_applications_on_uid" ON "oauth_applications" ("uid")[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "oauth_access_grants" ("id" bigserial primary key, "resource_owner_id" bigint NOT NULL, "application_id" bigint NOT NULL, "token" character varying NOT NULL, "expires_in" integer NOT NULL, "redirect_uri" text NOT NULL, "created_at" timestamp(6) NOT NULL, "revoked_at" timestamp(6), "scopes" character varying DEFAULT '' NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_oauth_access_grants_on_resource_owner_id" ON "oauth_access_grants" ("resource_owner_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_oauth_access_grants_on_application_id" ON "oauth_access_grants" ("application_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_oauth_access_grants_on_token" ON "oauth_access_grants" ("token")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mALTER TABLE "oauth_access_grants" ADD CONSTRAINT "fk_rails_b4b53e07b8"
+FOREIGN KEY ("application_id")
+  REFERENCES "oauth_applications" ("id")
+[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "oauth_access_tokens" ("id" bigserial primary key, "resource_owner_id" bigint, "application_id" bigint NOT NULL, "token" character varying NOT NULL, "refresh_token" character varying, "expires_in" integer, "revoked_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "scopes" character varying, "previous_refresh_token" character varying DEFAULT '' NOT NULL)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE INDEX "index_oauth_access_tokens_on_resource_owner_id" ON "oauth_access_tokens" ("resource_owner_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_oauth_access_tokens_on_application_id" ON "oauth_access_tokens" ("application_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_oauth_access_tokens_on_token" ON "oauth_access_tokens" ("token")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_oauth_access_tokens_on_refresh_token" ON "oauth_access_tokens" ("refresh_token")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "oauth_access_tokens" ADD CONSTRAINT "fk_rails_732cb83ab7"
+FOREIGN KEY ("application_id")
+  REFERENCES "oauth_applications" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220508103853"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddRoleToUser (20220508103929)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" ADD "role" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220508103929"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(7263652049543621340)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 127.0.0.1 at 2022-05-08 13:40:14 +0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.8ms | Allocations: 627)
+Completed 200 OK in 6ms (Views: 2.3ms | ActiveRecord: 0.0ms | Allocations: 5654)
+
+
+Started GET "/doorkeeper" for 127.0.0.1 at 2022-05-08 13:41:32 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/doorkeeper"):
+  
+Started GET "/doorkeeper/applications" for 127.0.0.1 at 2022-05-08 13:41:40 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/doorkeeper/applications"):
+  
+Started GET "/oauth" for 127.0.0.1 at 2022-05-08 13:41:50 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/oauth"):
+  
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:41:58 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms | Allocations: 3909)
+
+
+  
+NameError (undefined local variable or method `sign_in_url' for #<Doorkeeper::ApplicationsController:0x0000000000d188>
+Did you mean?  sign_in):
+  
+config/initializers/doorkeeper.rb:25:in `block (2 levels) in <main>'
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:42:32 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms | Allocations: 3726)
+
+
+  
+NameError (undefined local variable or method `sign_in_url' for #<Doorkeeper::ApplicationsController:0x0000000000d4a8>
+Did you mean?  sign_in):
+  
+config/initializers/doorkeeper.rb:25:in `block (2 levels) in <main>'
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:42:38 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms | Allocations: 3727)
+
+
+  
+NameError (undefined local variable or method `sign_in_url' for #<Doorkeeper::ApplicationsController:0x0000000000d7f0>
+Did you mean?  sign_in):
+  
+config/initializers/doorkeeper.rb:25:in `block (2 levels) in <main>'
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:42:38 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms | Allocations: 3727)
+
+
+  
+NameError (undefined local variable or method `sign_in_url' for #<Doorkeeper::ApplicationsController:0x0000000000db38>
+Did you mean?  sign_in):
+  
+config/initializers/doorkeeper.rb:25:in `block (2 levels) in <main>'
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:42:38 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms | Allocations: 3727)
+
+
+  
+NameError (undefined local variable or method `sign_in_url' for #<Doorkeeper::ApplicationsController:0x0000000000de80>
+Did you mean?  sign_in):
+  
+config/initializers/doorkeeper.rb:25:in `block (2 levels) in <main>'
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:42:47 +0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Doorkeeper::ApplicationsController#index as HTML
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.0ms | Allocations: 6346)
+
+
+  
+NameError (undefined local variable or method `new_user_session' for #<Doorkeeper::ApplicationsController:0x0000000000c788>
+Did you mean?  new_user_session_url):
+  
+config/initializers/doorkeeper.rb:25:in `block (2 levels) in <main>'
+Started GET "/oauth" for 127.0.0.1 at 2022-05-08 13:42:51 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/oauth"):
+  
+Started GET "/" for 127.0.0.1 at 2022-05-08 13:42:54 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.7ms | Allocations: 376)
+Completed 200 OK in 3ms (Views: 1.8ms | ActiveRecord: 0.0ms | Allocations: 1383)
+
+
+Started GET "/users/sign_in/" for 127.0.0.1 at 2022-05-08 13:43:00 +0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/devise-4.8.1/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/devise-4.8.1/app/views/devise/shared/_links.html.erb (Duration: 1.2ms | Allocations: 841)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/devise-4.8.1/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 24.9ms | Allocations: 12383)
+  Rendered layout layouts/application.html.erb (Duration: 125.1ms | Allocations: 55756)
+Completed 200 OK in 147ms (Views: 127.9ms | ActiveRecord: 4.1ms | Allocations: 64115)
+
+
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "prokopenko@fastmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "role") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["email", "prokopenko@fastmail.com"], ["encrypted_password", "[FILTERED]"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2022-05-08 10:43:45.715240"], ["updated_at", "2022-05-08 10:43:45.715240"], ["role", nil]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/users/sign_in" for 127.0.0.1 at 2022-05-08 13:43:56 +0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"prokopenko@fastmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "prokopenko@fastmail.com"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 302 Found in 285ms (ActiveRecord: 0.6ms | Allocations: 5908)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-08 13:43:57 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.7ms | Allocations: 367)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms | Allocations: 1152)
+
+
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:44:04 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+Filter chain halted as :authenticate_admin! rendered or redirected
+Completed 403 Forbidden in 3ms (ActiveRecord: 0.2ms | Allocations: 1104)
+
+
+Started GET "/oauth/" for 127.0.0.1 at 2022-05-08 13:44:08 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/oauth"):
+  
+Started GET "/oauth/" for 127.0.0.1 at 2022-05-08 13:48:27 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/oauth"):
+  
+Started GET "//oauth/applications" for 127.0.0.1 at 2022-05-08 13:49:53 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+Filter chain halted as :authenticate_admin! rendered or redirected
+Completed 403 Forbidden in 8ms (ActiveRecord: 2.4ms | Allocations: 3772)
+
+
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:49:56 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+Filter chain halted as :authenticate_admin! rendered or redirected
+Completed 403 Forbidden in 2ms (ActiveRecord: 0.2ms | Allocations: 1065)
+
+
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (0.3ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1, "role" = $2 WHERE "users"."id" = $3[0m  [["updated_at", "2022-05-08 10:52:39.031177"], ["role", "admin"], ["id", 1]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:52:45 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin
+  [1m[36mDoorkeeper::Application Load (0.7ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" ORDER BY "oauth_applications"."created_at" ASC[0m
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin (Duration: 3.2ms | Allocations: 1734)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 41.9ms | Allocations: 17467)
+Completed 500 Internal Server Error in 49ms (ActiveRecord: 2.0ms | Allocations: 20042)
+
+
+  
+ActionView::Template::Error (Asset `doorkeeper/admin/application.css` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link doorkeeper/admin/application.css
+
+and restart your server):
+     5:   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     6:   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     7:   <title><%= t('doorkeeper.layouts.admin.title') %></title>
+     8:   <%= stylesheet_link_tag "doorkeeper/admin/application" %>
+     9:   <%= csrf_meta_tags %>
+    10: </head>
+    11: <body>
+  
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:372:in `raise_unless_precompiled_asset'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:338:in `digest_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:326:in `asset_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:103:in `block in resolve_asset_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:243:in `block in resolve_asset'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:242:in `each'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:242:in `detect'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:242:in `resolve_asset'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:102:in `resolve_asset_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:80:in `compute_asset_path'
+actionview (7.0.2.4) lib/action_view/helpers/asset_url_helper.rb:203:in `asset_path'
+actionview (7.0.2.4) lib/action_view/helpers/asset_url_helper.rb:348:in `stylesheet_path'
+actionview (7.0.2.4) lib/action_view/helpers/asset_tag_helper.rb:180:in `block in stylesheet_link_tag'
+actionview (7.0.2.4) lib/action_view/helpers/asset_tag_helper.rb:179:in `map'
+actionview (7.0.2.4) lib/action_view/helpers/asset_tag_helper.rb:179:in `stylesheet_link_tag'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:186:in `block in stylesheet_link_tag'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:184:in `map'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:184:in `stylesheet_link_tag'
+doorkeeper (5.5.4) app/views/layouts/doorkeeper/admin.html.erb:8
+actionview (7.0.2.4) lib/action_view/base.rb:244:in `public_send'
+actionview (7.0.2.4) lib/action_view/base.rb:244:in `_run'
+actionview (7.0.2.4) lib/action_view/template.rb:157:in `block in render'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.2.4) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `instrument'
+actionview (7.0.2.4) lib/action_view/template.rb:361:in `instrument_render_template'
+actionview (7.0.2.4) lib/action_view/template.rb:155:in `render'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:76:in `block in render_with_layout'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.2.4) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `instrument'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:74:in `render_with_layout'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:59:in `render_template'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:11:in `render'
+actionview (7.0.2.4) lib/action_view/renderer/renderer.rb:61:in `render_template_to_object'
+actionview (7.0.2.4) lib/action_view/renderer/renderer.rb:29:in `render_to_object'
+actionview (7.0.2.4) lib/action_view/rendering.rb:117:in `block in _render_template'
+actionview (7.0.2.4) lib/action_view/base.rb:270:in `in_rendering_context'
+actionview (7.0.2.4) lib/action_view/rendering.rb:116:in `_render_template'
+actionpack (7.0.2.4) lib/action_controller/metal/streaming.rb:216:in `_render_template'
+actionview (7.0.2.4) lib/action_view/rendering.rb:103:in `render_to_body'
+actionpack (7.0.2.4) lib/action_controller/metal/rendering.rb:46:in `render_to_body'
+actionpack (7.0.2.4) lib/action_controller/metal/renderers.rb:142:in `render_to_body'
+actionpack (7.0.2.4) lib/abstract_controller/rendering.rb:25:in `render'
+actionpack (7.0.2.4) lib/action_controller/metal/rendering.rb:30:in `render'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:22:in `block (2 levels) in render'
+/home/alex/.rbenv/versions/3.0.0/lib/ruby/3.0.0/benchmark.rb:308:in `realtime'
+activesupport (7.0.2.4) lib/active_support/core_ext/benchmark.rb:14:in `ms'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:22:in `block in render'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:91:in `cleanup_view_runtime'
+activerecord (7.0.2.4) lib/active_record/railties/controller_runtime.rb:34:in `cleanup_view_runtime'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:21:in `render'
+actionpack (7.0.2.4) lib/action_controller/metal/implicit_render.rb:35:in `default_render'
+actionpack (7.0.2.4) lib/action_controller/metal/basic_implicit_render.rb:6:in `block in send_action'
+<internal:kernel>:90:in `tap'
+actionpack (7.0.2.4) lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'
+actionpack (7.0.2.4) lib/abstract_controller/base.rb:214:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/rendering.rb:53:in `process_action'
+actionpack (7.0.2.4) lib/abstract_controller/callbacks.rb:234:in `block in process_action'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:118:in `block in run_callbacks'
+actiontext (7.0.2.4) lib/action_text/rendering.rb:20:in `with_renderer'
+actiontext (7.0.2.4) lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:127:in `instance_exec'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:127:in `block in run_callbacks'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:138:in `run_callbacks'
+actionpack (7.0.2.4) lib/abstract_controller/callbacks.rb:233:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/rescue.rb:22:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:67:in `block in process_action'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.2.4) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `instrument'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:66:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (7.0.2.4) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (7.0.2.4) lib/abstract_controller/base.rb:151:in `process'
+actionview (7.0.2.4) lib/action_view/rendering.rb:39:in `process'
+actionpack (7.0.2.4) lib/action_controller/metal.rb:188:in `dispatch'
+actionpack (7.0.2.4) lib/action_controller/metal.rb:251:in `dispatch'
+actionpack (7.0.2.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.0.2.4) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.0.2.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (7.0.2.4) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (7.0.2.4) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.0.2.4) lib/action_dispatch/routing/route_set.rb:850:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.3) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.3) lib/rack/etag.rb:27:in `call'
+rack (2.2.3) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.3) lib/rack/head.rb:12:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/http/permissions_policy.rb:22:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.2.3) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.3) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/cookies.rb:693:in `call'
+activerecord (7.0.2.4) lib/active_record/migration.rb:603:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+web-console (4.2.0) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/show_exceptions.rb:26:in `call'
+railties (7.0.2.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (7.0.2.4) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.2.4) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.2.4) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.2.4) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.2.4) lib/rails/rack/logger.rb:25:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.2.4) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/server_timing.rb:20:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.2.4) lib/rails/engine.rb:530:in `call'
+puma (5.6.4) lib/puma/configuration.rb:252:in `call'
+puma (5.6.4) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.4) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.4) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.4) lib/puma/server.rb:441:in `process_client'
+puma (5.6.4) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:52:58 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin
+  [1m[36mDoorkeeper::Application Load (0.3ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" ORDER BY "oauth_applications"."created_at" ASC[0m
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin (Duration: 1.9ms | Allocations: 1149)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 19.3ms | Allocations: 16767)
+Completed 200 OK in 23ms (Views: 19.5ms | ActiveRecord: 0.5ms | Allocations: 18081)
+
+
+Started GET "/oauth/applications/new" for 127.0.0.1 at 2022-05-08 13:53:00 +0300
+Processing by Doorkeeper::ApplicationsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/new.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_form.html.erb (Duration: 9.9ms | Allocations: 7268)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/new.html.erb within layouts/doorkeeper/admin (Duration: 11.0ms | Allocations: 7590)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 13.2ms | Allocations: 9119)
+Completed 200 OK in 23ms (Views: 13.6ms | ActiveRecord: 2.0ms | Allocations: 14647)
+
+
+Started POST "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:54:12 +0300
+Processing by Doorkeeper::ApplicationsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "doorkeeper_application"=>{"name"=>"Tasks", "redirect_uri"=>"localhost:3001/auth/callback", "confidential"=>"1", "scopes"=>""}, "commit"=>"Submit"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDoorkeeper::Application Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "rQq2kN-97yiFAzkk0bjjvnpB1wqF2UezruigipXr3hk"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/new.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_form.html.erb (Duration: 3.0ms | Allocations: 2393)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/new.html.erb within layouts/doorkeeper/admin (Duration: 3.3ms | Allocations: 2488)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 5.2ms | Allocations: 4053)
+Completed 200 OK in 18ms (Views: 5.7ms | ActiveRecord: 0.6ms | Allocations: 12799)
+
+
+Started POST "/oauth/applications" for 127.0.0.1 at 2022-05-08 13:54:18 +0300
+Processing by Doorkeeper::ApplicationsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "doorkeeper_application"=>{"name"=>"Tasks", "redirect_uri"=>"http://localhost:3001/auth/callback", "confidential"=>"1", "scopes"=>""}, "commit"=>"Submit"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDoorkeeper::Application Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::Application Create (0.4ms)[0m  [1m[32mINSERT INTO "oauth_applications" ("name", "uid", "secret", "redirect_uri", "scopes", "confidential", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Tasks"], ["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["secret", "[FILTERED]"], ["redirect_uri", "http://localhost:3001/auth/callback"], ["scopes", ""], ["confidential", true], ["created_at", "2022-05-08 10:54:18.890849"], ["updated_at", "2022-05-08 10:54:18.890849"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/oauth/applications/1
+Completed 302 Found in 11ms (ActiveRecord: 2.3ms | Allocations: 6137)
+
+
+Started GET "/oauth/applications/1" for 127.0.0.1 at 2022-05-08 13:54:18 +0300
+Processing by Doorkeeper::ApplicationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.1ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 0.8ms | Allocations: 521)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin (Duration: 2.7ms | Allocations: 1859)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 4.4ms | Allocations: 3372)
+Completed 200 OK in 9ms (Views: 4.8ms | ActiveRecord: 0.3ms | Allocations: 6141)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 13:58:04 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/auth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:10:in `block (2 levels) in <main>'
+Redirected to http://localhost:3000/users/sign_in
+Filter chain halted as :authenticate_resource_owner! rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.1ms | Allocations: 1112)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-08 13:58:04 +0300
+  
+ActionController::RoutingError (uninitialized constant Users):
+  
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-08 14:00:09 +0300
+Processing by Users::SessionsController#new as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 8ms (ActiveRecord: 2.4ms | Allocations: 4267)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-08 14:00:10 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.4ms | Allocations: 23)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms | Allocations: 285)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 14:00:15 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/auth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:10:in `block (2 levels) in <main>'
+Redirected to http://localhost:3000/users/sign_in
+Filter chain halted as :authenticate_resource_owner! rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms | Allocations: 1116)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-08 14:00:15 +0300
+Processing by Users::SessionsController#new as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.1ms | Allocations: 1441)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-08 14:00:15 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 23)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms | Allocations: 283)
+
+
+Started GET "/users/sign_out/" for 127.0.0.1 at 2022-05-08 14:00:26 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/users/sign_out"):
+  
+Started GET "/oauth/applications/" for 127.0.0.1 at 2022-05-08 14:40:00 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin
+  [1m[36mDoorkeeper::Application Load (1.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" ORDER BY "oauth_applications"."created_at" ASC[0m
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 4.0ms | Allocations: 528)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin (Duration: 16.4ms | Allocations: 2113)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 26.1ms | Allocations: 3697)
+Completed 200 OK in 79ms (Views: 30.0ms | ActiveRecord: 6.7ms | Allocations: 7848)
+
+
+Started GET "/oauth/applications/1/edit" for 127.0.0.1 at 2022-05-08 14:40:03 +0300
+Processing by Doorkeeper::ApplicationsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/edit.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_form.html.erb (Duration: 11.7ms | Allocations: 1617)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/edit.html.erb within layouts/doorkeeper/admin (Duration: 12.8ms | Allocations: 1861)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 14.9ms | Allocations: 3381)
+Completed 200 OK in 27ms (Views: 15.7ms | ActiveRecord: 0.5ms | Allocations: 5509)
+
+
+Started GET "/oauth/applications" for 127.0.0.1 at 2022-05-08 14:40:05 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin
+  [1m[36mDoorkeeper::Application Load (0.3ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" ORDER BY "oauth_applications"."created_at" ASC[0m
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 1.5ms | Allocations: 331)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin (Duration: 5.0ms | Allocations: 1806)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 6.7ms | Allocations: 3336)
+Completed 200 OK in 13ms (Views: 6.8ms | ActiveRecord: 0.6ms | Allocations: 4660)
+
+
+Started GET "/oauth/applications/1" for 127.0.0.1 at 2022-05-08 14:40:09 +0300
+Processing by Doorkeeper::ApplicationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.4ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 0.4ms | Allocations: 332)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin (Duration: 2.5ms | Allocations: 785)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 6.8ms | Allocations: 2294)
+Completed 200 OK in 16ms (Views: 7.3ms | ActiveRecord: 0.8ms | Allocations: 4374)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-08 15:11:40 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.7ms | Allocations: 23)
+Completed 200 OK in 5ms (Views: 2.5ms | Allocations: 281)
+
+
+Started GET "/oauth/applications/" for 127.0.0.1 at 2022-05-08 15:11:45 +0300
+Processing by Doorkeeper::ApplicationsController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin
+  [1m[36mDoorkeeper::Application Load (1.0ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" ORDER BY "oauth_applications"."created_at" ASC[0m
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 1.0ms | Allocations: 331)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/index.html.erb within layouts/doorkeeper/admin (Duration: 7.7ms | Allocations: 1848)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 14.2ms | Allocations: 3378)
+Completed 200 OK in 62ms (Views: 14.3ms | ActiveRecord: 10.6ms | Allocations: 6956)
+
+
+Started GET "/oauth/applications/1/edit" for 127.0.0.1 at 2022-05-08 15:11:48 +0300
+Processing by Doorkeeper::ApplicationsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.1ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/edit.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_form.html.erb (Duration: 3.7ms | Allocations: 1583)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/edit.html.erb within layouts/doorkeeper/admin (Duration: 4.1ms | Allocations: 1678)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 6.4ms | Allocations: 3198)
+Completed 200 OK in 12ms (Views: 6.9ms | ActiveRecord: 0.4ms | Allocations: 5259)
+
+
+Started PATCH "/oauth/applications/1" for 127.0.0.1 at 2022-05-08 15:11:54 +0300
+Processing by Doorkeeper::ApplicationsController#update as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "doorkeeper_application"=>{"name"=>"Tasks", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "confidential"=>"1", "scopes"=>""}, "commit"=>"Submit", "id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDoorkeeper::Application Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 AND "oauth_applications"."id" != $2 LIMIT $3[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::Application Update (0.4ms)[0m  [1m[33mUPDATE "oauth_applications" SET "redirect_uri" = $1, "updated_at" = $2 WHERE "oauth_applications"."id" = $3[0m  [["redirect_uri", "http://localhost:3001/users/auth/popugauth/callback"], ["updated_at", "2022-05-08 12:11:54.047595"], ["id", 1]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/oauth/applications/1
+Completed 302 Found in 32ms (ActiveRecord: 3.4ms | Allocations: 6245)
+
+
+Started GET "/oauth/applications/1" for 127.0.0.1 at 2022-05-08 15:11:54 +0300
+Processing by Doorkeeper::ApplicationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:22:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 0.4ms | Allocations: 330)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin (Duration: 1.6ms | Allocations: 774)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 5.4ms | Allocations: 2287)
+Completed 200 OK in 11ms (Views: 5.9ms | ActiveRecord: 0.4ms | Allocations: 4387)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 15:11:57 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:10:in `block (2 levels) in <main>'
+Redirected to http://localhost:3000/users/sign_in
+Filter chain halted as :authenticate_resource_owner! rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.3ms | Allocations: 1073)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-08 15:11:57 +0300
+Processing by Users::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.3ms | Allocations: 1476)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-08 15:11:57 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 23)
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms | Allocations: 283)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 15:12:09 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:10:in `block (2 levels) in <main>'
+Redirected to http://localhost:3000/users/sign_in
+Filter chain halted as :authenticate_resource_owner! rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.5ms | Allocations: 1078)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-08 15:12:09 +0300
+Processing by Users::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.3ms | Allocations: 1478)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-08 15:12:09 +0300
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/railties-7.0.2.4/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 23)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms | Allocations: 283)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 15:17:27 +0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.4ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/error.html.erb within layouts/doorkeeper/application
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/error.html.erb within layouts/doorkeeper/application (Duration: 8.6ms | Allocations: 4144)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb (Duration: 67.2ms | Allocations: 35564)
+Completed 500 Internal Server Error in 111ms (ActiveRecord: 7.2ms | Allocations: 58393)
+
+
+  
+ActionView::Template::Error (Asset `doorkeeper/application.css` was not declared to be precompiled in production.
+Declare links to your assets in `app/assets/config/manifest.js`.
+
+  //= link doorkeeper/application.css
+
+and restart your server):
+     6:   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     7:   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     8: 
+     9:   <%= stylesheet_link_tag "doorkeeper/application" %>
+    10:   <%= csrf_meta_tags %>
+    11: </head>
+    12: <body>
+  
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:372:in `raise_unless_precompiled_asset'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:338:in `digest_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:326:in `asset_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:103:in `block in resolve_asset_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:243:in `block in resolve_asset'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:242:in `each'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:242:in `detect'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:242:in `resolve_asset'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:102:in `resolve_asset_path'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:80:in `compute_asset_path'
+actionview (7.0.2.4) lib/action_view/helpers/asset_url_helper.rb:203:in `asset_path'
+actionview (7.0.2.4) lib/action_view/helpers/asset_url_helper.rb:348:in `stylesheet_path'
+actionview (7.0.2.4) lib/action_view/helpers/asset_tag_helper.rb:180:in `block in stylesheet_link_tag'
+actionview (7.0.2.4) lib/action_view/helpers/asset_tag_helper.rb:179:in `map'
+actionview (7.0.2.4) lib/action_view/helpers/asset_tag_helper.rb:179:in `stylesheet_link_tag'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:186:in `block in stylesheet_link_tag'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:184:in `map'
+sprockets-rails (3.4.2) lib/sprockets/rails/helper.rb:184:in `stylesheet_link_tag'
+doorkeeper (5.5.4) app/views/layouts/doorkeeper/application.html.erb:9
+actionview (7.0.2.4) lib/action_view/base.rb:244:in `public_send'
+actionview (7.0.2.4) lib/action_view/base.rb:244:in `_run'
+actionview (7.0.2.4) lib/action_view/template.rb:157:in `block in render'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.2.4) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `instrument'
+actionview (7.0.2.4) lib/action_view/template.rb:361:in `instrument_render_template'
+actionview (7.0.2.4) lib/action_view/template.rb:155:in `render'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:76:in `block in render_with_layout'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.2.4) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `instrument'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:74:in `render_with_layout'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:59:in `render_template'
+actionview (7.0.2.4) lib/action_view/renderer/template_renderer.rb:11:in `render'
+actionview (7.0.2.4) lib/action_view/renderer/renderer.rb:61:in `render_template_to_object'
+actionview (7.0.2.4) lib/action_view/renderer/renderer.rb:29:in `render_to_object'
+actionview (7.0.2.4) lib/action_view/rendering.rb:117:in `block in _render_template'
+actionview (7.0.2.4) lib/action_view/base.rb:270:in `in_rendering_context'
+actionview (7.0.2.4) lib/action_view/rendering.rb:116:in `_render_template'
+actionpack (7.0.2.4) lib/action_controller/metal/streaming.rb:216:in `_render_template'
+actionview (7.0.2.4) lib/action_view/rendering.rb:103:in `render_to_body'
+actionpack (7.0.2.4) lib/action_controller/metal/rendering.rb:46:in `render_to_body'
+actionpack (7.0.2.4) lib/action_controller/metal/renderers.rb:142:in `render_to_body'
+actionpack (7.0.2.4) lib/abstract_controller/rendering.rb:25:in `render'
+actionpack (7.0.2.4) lib/action_controller/metal/rendering.rb:30:in `render'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:22:in `block (2 levels) in render'
+/home/alex/.rbenv/versions/3.0.0/lib/ruby/3.0.0/benchmark.rb:308:in `realtime'
+activesupport (7.0.2.4) lib/active_support/core_ext/benchmark.rb:14:in `ms'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:22:in `block in render'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:91:in `cleanup_view_runtime'
+activerecord (7.0.2.4) lib/active_record/railties/controller_runtime.rb:34:in `cleanup_view_runtime'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:21:in `render'
+doorkeeper (5.5.4) app/controllers/doorkeeper/authorizations_controller.rb:40:in `render_error'
+doorkeeper (5.5.4) app/controllers/doorkeeper/authorizations_controller.rb:11:in `new'
+actionpack (7.0.2.4) lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'
+actionpack (7.0.2.4) lib/abstract_controller/base.rb:214:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/rendering.rb:53:in `process_action'
+actionpack (7.0.2.4) lib/abstract_controller/callbacks.rb:234:in `block in process_action'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:118:in `block in run_callbacks'
+actiontext (7.0.2.4) lib/action_text/rendering.rb:20:in `with_renderer'
+actiontext (7.0.2.4) lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:127:in `instance_exec'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:127:in `block in run_callbacks'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:138:in `run_callbacks'
+actionpack (7.0.2.4) lib/abstract_controller/callbacks.rb:233:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/rescue.rb:22:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:67:in `block in process_action'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `block in instrument'
+activesupport (7.0.2.4) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (7.0.2.4) lib/active_support/notifications.rb:206:in `instrument'
+actionpack (7.0.2.4) lib/action_controller/metal/instrumentation.rb:66:in `process_action'
+actionpack (7.0.2.4) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (7.0.2.4) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (7.0.2.4) lib/abstract_controller/base.rb:151:in `process'
+actionview (7.0.2.4) lib/action_view/rendering.rb:39:in `process'
+actionpack (7.0.2.4) lib/action_controller/metal.rb:188:in `dispatch'
+actionpack (7.0.2.4) lib/action_controller/metal.rb:251:in `dispatch'
+actionpack (7.0.2.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.0.2.4) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.0.2.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (7.0.2.4) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (7.0.2.4) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.0.2.4) lib/action_dispatch/routing/route_set.rb:850:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (2.2.3) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.3) lib/rack/etag.rb:27:in `call'
+rack (2.2.3) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.3) lib/rack/head.rb:12:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/http/permissions_policy.rb:22:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.2.3) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.3) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/cookies.rb:693:in `call'
+activerecord (7.0.2.4) lib/active_record/migration.rb:603:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.2.4) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+web-console (4.2.0) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.0) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/show_exceptions.rb:26:in `call'
+railties (7.0.2.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (7.0.2.4) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.2.4) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.2.4) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.2.4) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.2.4) lib/rails/rack/logger.rb:25:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.2.4) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/server_timing.rb:20:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.2.4) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.2.4) lib/rails/engine.rb:530:in `call'
+puma (5.6.4) lib/puma/configuration.rb:252:in `call'
+puma (5.6.4) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.4) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.4) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.4) lib/puma/server.rb:441:in `process_client'
+puma (5.6.4) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 15:18:37 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.1ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/error.html.erb within layouts/doorkeeper/application
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/error.html.erb within layouts/doorkeeper/application (Duration: 0.2ms | Allocations: 77)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb (Duration: 33.8ms | Allocations: 17387)
+Completed 200 OK in 41ms (Views: 34.4ms | ActiveRecord: 0.5ms | Allocations: 20396)
+
+
+Started GET "/oauth/applications/1/edit" for 127.0.0.1 at 2022-05-08 15:18:45 +0300
+Processing by Doorkeeper::ApplicationsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:21:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.1ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/edit.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_form.html.erb (Duration: 11.8ms | Allocations: 3814)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/edit.html.erb within layouts/doorkeeper/admin (Duration: 13.4ms | Allocations: 4146)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 16.7ms | Allocations: 6144)
+Completed 200 OK in 24ms (Views: 19.2ms | ActiveRecord: 0.4ms | Allocations: 9378)
+
+
+Started PATCH "/oauth/applications/1" for 127.0.0.1 at 2022-05-08 15:18:49 +0300
+Processing by Doorkeeper::ApplicationsController#update as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "doorkeeper_application"=>{"name"=>"Tasks", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "confidential"=>"1", "scopes"=>"tasks"}, "commit"=>"Submit", "id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:21:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDoorkeeper::Application Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 AND "oauth_applications"."id" != $2 LIMIT $3[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::Application Update (0.4ms)[0m  [1m[33mUPDATE "oauth_applications" SET "scopes" = $1, "updated_at" = $2 WHERE "oauth_applications"."id" = $3[0m  [["scopes", "tasks"], ["updated_at", "2022-05-08 12:18:49.466983"], ["id", 1]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/oauth/applications/1
+Completed 302 Found in 21ms (ActiveRecord: 2.6ms | Allocations: 7697)
+
+
+Started GET "/oauth/applications/1" for 127.0.0.1 at 2022-05-08 15:18:49 +0300
+Processing by Doorkeeper::ApplicationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:21:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.1ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/_delete_form.html.erb (Duration: 0.9ms | Allocations: 516)
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/applications/show.html.erb within layouts/doorkeeper/admin (Duration: 3.5ms | Allocations: 1891)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/admin.html.erb (Duration: 5.6ms | Allocations: 3405)
+Completed 200 OK in 10ms (Views: 6.0ms | ActiveRecord: 0.3ms | Allocations: 5601)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=" for 127.0.0.1 at 2022-05-08 15:18:53 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>""}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/error.html.erb within layouts/doorkeeper/application
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/error.html.erb within layouts/doorkeeper/application (Duration: 0.2ms | Allocations: 77)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb (Duration: 1.8ms | Allocations: 1553)
+Completed 200 OK in 6ms (Views: 2.2ms | ActiveRecord: 0.4ms | Allocations: 4507)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=tasks" for 127.0.0.1 at 2022-05-08 15:22:53 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>"tasks"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.4ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::AccessToken Load (1.4ms)[0m  [1m[34mSELECT "oauth_access_tokens".* FROM "oauth_access_tokens" WHERE "oauth_access_tokens"."resource_owner_id" = $1 AND "oauth_access_tokens"."application_id" = $2 AND "oauth_access_tokens"."revoked_at" IS NULL ORDER BY "oauth_access_tokens"."id" ASC LIMIT $3[0m  [["resource_owner_id", 1], ["application_id", 1], ["LIMIT", 10000]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/new.html.erb within layouts/doorkeeper/application
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/new.html.erb within layouts/doorkeeper/application (Duration: 2.5ms | Allocations: 2494)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb (Duration: 4.6ms | Allocations: 3956)
+Completed 200 OK in 60ms (Views: 5.3ms | ActiveRecord: 6.8ms | Allocations: 15819)
+
+
+Started POST "/oauth/authorize" for 127.0.0.1 at 2022-05-08 15:22:55 +0300
+Processing by Doorkeeper::AuthorizationsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "state"=>"", "response_type"=>"code", "response_mode"=>"query", "scope"=>"tasks", "code_challenge"=>"", "code_challenge_method"=>"", "commit"=>"Authorize"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDoorkeeper::AccessGrant Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "oauth_access_grants" WHERE "oauth_access_grants"."token" = $1 LIMIT $2[0m  [["token", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::AccessGrant Create (0.9ms)[0m  [1m[32mINSERT INTO "oauth_access_grants" ("resource_owner_id", "application_id", "token", "expires_in", "redirect_uri", "created_at", "revoked_at", "scopes") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["resource_owner_id", 1], ["application_id", 1], ["token", "[FILTERED]"], ["expires_in", 600], ["redirect_uri", "http://localhost:3001/users/auth/popugauth/callback"], ["created_at", "2022-05-08 12:22:55.915210"], ["revoked_at", nil], ["scopes", "tasks"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3001/users/auth/popugauth/callback?code=yIcq2C_PRAUZKTz1nM0yPD4plozUehnm1jQReI_vU-4
+Completed 302 Found in 27ms (ActiveRecord: 5.6ms | Allocations: 13028)
+
+
+Started GET "/oauth/authorize?client_id=SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fusers%2Fauth%2Fpopugauth%2Fcallback&response_type=code&scope=tasks" for 127.0.0.1 at 2022-05-08 15:24:42 +0300
+Processing by Doorkeeper::AuthorizationsController#new as HTML
+  Parameters: {"client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "response_type"=>"code", "scope"=>"tasks"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.2ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::AccessToken Load (0.2ms)[0m  [1m[34mSELECT "oauth_access_tokens".* FROM "oauth_access_tokens" WHERE "oauth_access_tokens"."resource_owner_id" = $1 AND "oauth_access_tokens"."application_id" = $2 AND "oauth_access_tokens"."revoked_at" IS NULL ORDER BY "oauth_access_tokens"."id" ASC LIMIT $3[0m  [["resource_owner_id", 1], ["application_id", 1], ["LIMIT", 10000]]
+  Rendering layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb
+  Rendering /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/new.html.erb within layouts/doorkeeper/application
+  Rendered /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/doorkeeper/authorizations/new.html.erb within layouts/doorkeeper/application (Duration: 2.1ms | Allocations: 1698)
+  Rendered layout /home/alex/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/doorkeeper-5.5.4/app/views/layouts/doorkeeper/application.html.erb (Duration: 5.2ms | Allocations: 3160)
+Completed 200 OK in 12ms (Views: 5.8ms | ActiveRecord: 0.6ms | Allocations: 7176)
+
+
+Started POST "/oauth/authorize" for 127.0.0.1 at 2022-05-08 15:24:44 +0300
+Processing by Doorkeeper::AuthorizationsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "client_id"=>"SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0", "redirect_uri"=>"http://localhost:3001/users/auth/popugauth/callback", "state"=>"", "response_type"=>"code", "response_mode"=>"query", "scope"=>"tasks", "code_challenge"=>"", "code_challenge_method"=>"", "commit"=>"Authorize"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ config/initializers/doorkeeper.rb:9:in `block (2 levels) in <main>'
+  [1m[36mDoorkeeper::Application Load (0.1ms)[0m  [1m[34mSELECT "oauth_applications".* FROM "oauth_applications" WHERE "oauth_applications"."uid" = $1 LIMIT $2[0m  [["uid", "SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDoorkeeper::AccessGrant Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "oauth_access_grants" WHERE "oauth_access_grants"."token" = $1 LIMIT $2[0m  [["token", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mDoorkeeper::AccessGrant Create (0.3ms)[0m  [1m[32mINSERT INTO "oauth_access_grants" ("resource_owner_id", "application_id", "token", "expires_in", "redirect_uri", "created_at", "revoked_at", "scopes") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["resource_owner_id", 1], ["application_id", 1], ["token", "[FILTERED]"], ["expires_in", 600], ["redirect_uri", "http://localhost:3001/users/auth/popugauth/callback"], ["created_at", "2022-05-08 12:24:44.236926"], ["revoked_at", nil], ["scopes", "tasks"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3001/users/auth/popugauth/callback?code=kuulV7rMittz4ENgsKENpk6XID6Hc7153Zwg7Qfj9gc
+Completed 302 Found in 11ms (ActiveRecord: 2.2ms | Allocations: 6755)
+
+

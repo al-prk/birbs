@@ -25,3 +25,7 @@ test:
 production:
   <<: *default
   database: ppg_auth_production
+
+production:
+  <<: *default
+  database: db/production.sqlite3
