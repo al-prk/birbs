@@ -81,10 +81,14 @@ GEM
     builder (3.2.4)
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
+    config (4.0.0)
+      deep_merge (~> 1.2, >= 1.2.1)
+      dry-validation (~> 1.0, >= 1.0.0)
     crass (1.0.6)
     debug (1.5.0)
       irb (>= 1.3.6)
       reline (>= 0.2.7)
+    deep_merge (1.2.2)
     delivery_boy (1.1.0)
       king_konf (~> 1.0)
       ruby-kafka (~> 1.0)
@@ -151,6 +155,7 @@ GEM
     importmap-rails (1.0.3)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
+    interactor (3.1.2)
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
@@ -159,6 +164,8 @@ GEM
       activesupport (>= 5.0.0)
     json-schema (3.0.0)
       addressable (>= 2.8)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     jwt (2.3.0)
     karafka (1.4.13)
       dry-configurable (~> 0.13)
@@ -301,10 +308,13 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  config
   debug
   devise
   importmap-rails
+  interactor
   jbuilder
+  jsonapi-serializer
   karafka
   omniauth
   omniauth-oauth2
@@ -316,6 +326,7 @@ DEPENDENCIES
   schema_registry!
   sprockets-rails
   tzinfo-data
+  waterdrop
   web-console
 
 RUBY VERSION
