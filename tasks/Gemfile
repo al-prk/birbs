@@ -17,6 +17,8 @@ gem 'omniauth'
 gem 'omniauth-oauth2'
 gem "omniauth-rails_csrf_protection"
 
+gem 'schema_registry', path: '../event_schema_registry/ruby/'
+
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
@@ -28,6 +30,8 @@ gem "importmap-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+
+gem 'pry'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
