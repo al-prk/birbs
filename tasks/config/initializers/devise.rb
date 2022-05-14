@@ -26,7 +26,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.omniauth :popugauth, 'SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0', ' VC6PzD5arSANf8kLsf7YRSoocZlP_o0RG7irwuf_FZc', scope: 'tasks'
+  config.omniauth :popugauth, 'SecE1VGqYlmJC3iZmWVrO-SfAZlHmPFgpnPpAMDUvZ0', ' VC6PzD5arSANf8kLsf7YRSoocZlP_o0RG7irwuf_FZc', scope: 'tasks', strategy_class: OmniAuth::Strategies::Popugauth
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # Configure the class responsible to send e-mails.

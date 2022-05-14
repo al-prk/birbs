@@ -11,6 +11,8 @@ gem "sprockets-rails"
 
 gem 'devise'
 
+gem 'karafka'
+
 gem 'omniauth'
 gem 'omniauth-oauth2'
 gem "omniauth-rails_csrf_protection"
