@@ -1,3 +1,9 @@
+PATH
+  remote: ../event_schema_registry/ruby
+  specs:
+    schema_registry (1)
+      json-schema
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -66,6 +72,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     bcrypt (3.1.17)
     bindex (0.8.1)
     bootsnap (1.11.1)
@@ -149,6 +157,8 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    json-schema (3.0.0)
+      addressable (>= 2.8)
     jwt (2.3.0)
     karafka (1.4.13)
       dry-configurable (~> 0.13)
@@ -211,6 +221,7 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -302,6 +313,7 @@ DEPENDENCIES
   pry
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.4)
+  schema_registry!
   sprockets-rails
   tzinfo-data
   web-console

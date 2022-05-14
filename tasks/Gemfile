@@ -17,6 +17,8 @@ gem 'omniauth'
 gem 'omniauth-oauth2'
 gem "omniauth-rails_csrf_protection"
 
+gem 'schema_registry', path: '../event_schema_registry/ruby/'
+
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
