@@ -21,7 +21,7 @@ Doorkeeper.configure do
     if current_user
       head :forbidden unless current_user.admin?
     else
-      redirect_to new_user_session
+      redirect_to new_user_session_path
     end
   end
 
