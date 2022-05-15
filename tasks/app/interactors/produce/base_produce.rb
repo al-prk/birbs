@@ -11,7 +11,13 @@ module Produce
     end
 
     def validate?
-      SchemaRegistry.validate_event(message, event_name, version: version)
+      validation.success?
+    end
+
+    private
+
+    def validation
+      @validation ||= SchemaRegistry.validate_event(message, event_name.downcase, version: version)
     end
   end
 end
