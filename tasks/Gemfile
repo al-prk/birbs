@@ -12,12 +12,18 @@ gem "sprockets-rails"
 gem 'devise'
 
 gem 'karafka'
+gem 'waterdrop'
 
 gem 'omniauth'
 gem 'omniauth-oauth2'
 gem "omniauth-rails_csrf_protection"
 
 gem 'schema_registry', path: '../event_schema_registry/ruby/'
+
+gem 'interactor'
+gem 'jsonapi-serializer'
+
+gem 'config'
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
